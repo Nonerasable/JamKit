@@ -1,19 +1,24 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace JamKit {
-    
     public static class ServiceLocator {
+        
         private static bool _isInitialized;
         private static readonly Dictionary<Type, object> _services = new();
         private static readonly List<IUpdatableService> _updatables = new();
 
-        public static void EnsureInitialized() {
+        public static void EnsureInitialized(AudioMixer audioMixer) {
             if (_isInitialized) return;
             _isInitialized = true;
 
+            Register(new GameData());
             Register(new SceneLoader());
+            Register(new SoundSettingsManager(audioMixer));
+            Register(new UIManager());
+            Register(new InputMapController());
         }
 
         public static void Register<T>(T service) where T : class, IService {
