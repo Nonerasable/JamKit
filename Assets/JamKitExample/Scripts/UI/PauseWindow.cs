@@ -22,6 +22,7 @@ namespace JamKit.Example.UI {
 
         private void OnQuitToMenuPressed() {
             Time.timeScale = 1f;
+            ServiceLocator.Get<UIManager>().CloseAll();
             ServiceLocator.Get<SceneLoader>().LoadMainMenu();
         }
     }

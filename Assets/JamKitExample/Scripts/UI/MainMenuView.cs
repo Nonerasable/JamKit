@@ -15,6 +15,13 @@ namespace JamKit.Example {
             _quitButton.onClick.AddListener(HandleQuitButtonClick);
         }
 
+        private void Start() {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            var inputMapController = ServiceLocator.Get<InputMapController>();
+            inputMapController.SetInputMode(InputMode.UI);
+        }
+
         private void HandlePlayButtonClick() {
             var loader = ServiceLocator.Get<SceneLoader>();
             loader.LoadLevel(_firstLevelConfig);
