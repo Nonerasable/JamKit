@@ -9,13 +9,13 @@ namespace JamKit {
         public Slider slider;
 
         private void Start() {
-            var settings = ServiceLocator.Get<SoundSettingsManager>();
+            var settings = ServiceLocator.TryGet<SoundSettingsManager>();
             slider.value = settings.GetVolumeByType(volumeType);
             slider.onValueChanged.AddListener(OnSliderValueChanged);
         }
 
         private void OnSliderValueChanged(float value) {
-            var settings = ServiceLocator.Get<SoundSettingsManager>();
+            var settings = ServiceLocator.TryGet<SoundSettingsManager>();
             settings.SetValueByType(volumeType, value);
         }
     }

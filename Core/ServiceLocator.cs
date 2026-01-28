@@ -33,13 +33,30 @@ namespace JamKit {
             }
         }
 
-        public static T Get<T>() where T : class, IService {
+        public static void Unregister<T>(T service) where T : class, IService {
+            var type = typeof(T);
+            if (!_services.ContainsKey(type)) return;
+
+            if (service is IUpdatableService updatable) {
+                _updatables.Remove(updatable);
+            }
+            _services.Remove(type);
+        }
+
+        public static T TryGet<T>() where T : class, IService {
             if (_services.TryGetValue(typeof(T), out var service)) {
                 return service as T;
             }
-            
-            Debug.LogError($"Service not found: {typeof(T)}");
             return null;
+        }
+        
+        public static T Get<T>() where T : class, IService, new() {
+            if (_services.TryGetValue(typeof(T), out var service)) {
+                return service as T;
+            }
+            T newService = new T();
+            Register(newService);
+            return newService;
         }
 
         public static void TickAll(float deltaTime) {

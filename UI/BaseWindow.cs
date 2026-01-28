@@ -14,7 +14,7 @@ namespace JamKit {
         }
 
         protected void Close() {
-            ServiceLocator.Get<UIManager>().HideWindow(this);
+            ServiceLocator.TryGet<UIManager>().HideWindow(this);
         }
     }
 }

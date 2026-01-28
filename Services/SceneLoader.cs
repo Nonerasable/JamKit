@@ -22,7 +22,7 @@ namespace JamKit {
             SceneManager.LoadScene(MAIN_MENU_SCENE_NAME);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            ServiceLocator.Get<InputMapController>().SetInputMode(InputMode.UI);
+            ServiceLocator.TryGet<InputMapController>().SetInputMode(InputMode.UI);
         }
 
         public LevelConfig GetCurrentLevelConfig() {
