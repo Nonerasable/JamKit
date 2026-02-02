@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Audio;
 
 namespace JamKit {
     public static class ServiceLocator {
         
         private static bool _isInitialized;
-        private static readonly Dictionary<Type, object> _services = new();
+        private static readonly Dictionary<Type, IService> _services = new();
         private static readonly List<IUpdatableService> _updatables = new();
 
         public static void EnsureInitialized(AudioMixer audioMixer) {
@@ -50,7 +51,13 @@ namespace JamKit {
             return null;
         }
         
-        public static T Get<T>() where T : class, IService, new() {
+        public static T Get<T>() where T : class, IService {
+            var service = _services.GetValueOrDefault(typeof(T));
+            Assert.IsNotNull(service, $"Service {typeof(T)} is not initialized.");
+            return service as T;
+        }
+        
+        public static T GetOrCreated<T>() where T : class, IService, new() {
             if (_services.TryGetValue(typeof(T), out var service)) {
                 return service as T;
             }
