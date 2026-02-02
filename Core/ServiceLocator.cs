@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Audio;
 
@@ -57,7 +56,7 @@ namespace JamKit {
             return service as T;
         }
         
-        public static T GetOrCreated<T>() where T : class, IService, new() {
+        public static T GetOrCreate<T>() where T : class, IService, new() {
             if (_services.TryGetValue(typeof(T), out var service)) {
                 return service as T;
             }

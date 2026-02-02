@@ -13,7 +13,7 @@ namespace JamKit {
         }
 
         private IEnumerator LoadAsync() {
-            yield return ServiceLocator.Get<SceneLoader>().LoadTargetLevelAsync(
+            yield return ServiceLocator.GetOrCreate<SceneLoader>().LoadTargetLevelAsync(
                 progress => progressBar.value = progress
             );
         }

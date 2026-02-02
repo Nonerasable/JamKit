@@ -36,7 +36,7 @@ namespace JamKit {
             var hasUI = _openWindows.Count > 0;
             Cursor.visible = hasUI;
             Cursor.lockState = hasUI ? CursorLockMode.None : CursorLockMode.Locked;
-            var inputMapController = ServiceLocator.Get<InputMapController>();
+            var inputMapController = ServiceLocator.GetOrCreate<InputMapController>();
             inputMapController.SetInputMode(hasUI ? InputMode.UI : InputMode.Game);
         }
     }
