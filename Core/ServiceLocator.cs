@@ -22,7 +22,7 @@ namespace JamKit {
         }
 
         public static void Register<T>(T service) where T : class, IService {
-            var type = typeof(T);
+            var type = service.GetType();
             if (_services.ContainsKey(type)) return;
 
             _services[type] = service;
@@ -34,7 +34,7 @@ namespace JamKit {
         }
 
         public static void Unregister<T>(T service) where T : class, IService {
-            var type = typeof(T);
+            var type = service.GetType();
             if (!_services.ContainsKey(type)) return;
 
             if (service is IUpdatableService updatable) {
